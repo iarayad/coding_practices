@@ -1,0 +1,26 @@
+[workspace]
+authors = ["Group meeting demo"]
+channels = ["conda-forge"]
+name = "jj-supercurrent"
+platforms = ["linux-64", "osx-64"]
+
+[tasks]
+run-demo = "python scripts/run_supercurrent.py"
+test = "pytest"
+lint = "ruff check ."
+format = "ruff format ."
+precommit = "pre-commit run --all-files"
+
+[dependencies]
+python = "3.11.*"
+pip = ">=24.0,<26"
+kwant = ">=1.5"
+numpy = ">=1.26"
+scipy = ">=1.12"
+matplotlib = ">=3.8"
+pytest = ">=8.0"
+ruff = ">=0.6"
+pre-commit = ">=3.7"
+
+[pypi-dependencies]
+jj-supercurrent = { path = ".", editable = true }

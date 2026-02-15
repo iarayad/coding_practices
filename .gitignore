@@ -1,0 +1,10 @@
+# Python caches
+__pycache__/
+*.py[cod]
+
+# Pytest cache
+.pytest_cache/
+
+# Quarto render outputs
+slides.html
+slides_files/
