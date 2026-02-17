@@ -15,9 +15,9 @@ pixi run run-demo
 ```
 
 ## Structure
-- `src/jj_supercurrent/systems.py`: system definition.
-- `src/jj_supercurrent/solver.py`: dispersion computation.
-- `src/jj_supercurrent/current.py`: current computation.
+- `jj_supercurrent/systems.py`: system definition.
+- `jj_supercurrent/solver.py`: dispersion computation.
+- `jj_supercurrent/current.py`: current computation.
 - `scripts/run_supercurrent.py`: end-to-end script.
 - `tests/`: unit tests.
 

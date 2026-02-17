@@ -7,9 +7,9 @@ This demo computes the phase-dependent supercurrent of a Josephson junction in t
 3. Derive `I(phi)` from the phase derivative of a ground-state energy proxy.
 
 ## Module boundaries
-- `src/jj_supercurrent/systems.py`: only system construction.
-- `src/jj_supercurrent/solver.py`: only dispersion computation.
-- `src/jj_supercurrent/current.py`: only post-processing to current.
+- `jj_supercurrent/systems.py`: only system construction.
+- `jj_supercurrent/solver.py`: only dispersion computation.
+- `jj_supercurrent/current.py`: only post-processing to current.
 - `scripts/run_supercurrent.py`: orchestration and plotting.
 
 ## Design constraints
