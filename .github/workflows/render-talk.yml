@@ -25,10 +25,7 @@ jobs:
         uses: quarto-dev/quarto-actions/setup@v2
 
       - name: Render slides
-        uses: quarto-dev/quarto-actions/render@v2
-        with:
-          to: revealjs
-          path: slides.md
+        run: quarto render slides.md
 
       - name: Upload rendered talk
         uses: actions/upload-artifact@v4
@@ -36,4 +33,5 @@ jobs:
           name: slides-html
           path: |
             slides.html
+            slides_custom.css
             slides_files/
