@@ -1,0 +1,39 @@
+name: Render Talk
+
+on:
+  push:
+    paths:
+      - "slides.md"
+      - "slides_custom.css"
+      - ".github/workflows/render-talk.yml"
+  pull_request:
+    paths:
+      - "slides.md"
+      - "slides_custom.css"
+      - ".github/workflows/render-talk.yml"
+  workflow_dispatch:
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render slides
+        uses: quarto-dev/quarto-actions/render@v2
+        with:
+          to: revealjs
+          path: slides.md
+
+      - name: Upload rendered talk
+        uses: actions/upload-artifact@v4
+        with:
+          name: slides-html
+          path: |
+            slides.html
+            slides_files/
