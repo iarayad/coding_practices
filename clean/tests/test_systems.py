@@ -1,7 +1,8 @@
-"""Unit tests for simple system defaults."""
+"""Unit tests for system construction."""
 
-from jj_supercurrent.systems import DEFAULT_WIDTH
+from jj_supercurrent.systems import make_infinite_junction
 
 
-def test_default_width_is_positive():
-    assert DEFAULT_WIDTH > 0
+def test_make_infinite_junction_has_sites():
+    system = make_infinite_junction(width=20)
+    assert len(system.sites) > 0

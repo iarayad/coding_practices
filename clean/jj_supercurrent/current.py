@@ -2,6 +2,7 @@
 
 import numpy as np
 
+
 def current_from_dispersion(phases, dispersions):
     """Estimate supercurrent from phase derivative of ground-state energy."""
     if len(phases) != len(dispersions):
