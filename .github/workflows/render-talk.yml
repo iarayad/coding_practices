@@ -25,13 +25,10 @@ jobs:
         uses: quarto-dev/quarto-actions/setup@v2
 
       - name: Render slides
-        run: quarto render slides.md
+        run: quarto render slides.md --embed-resources
 
       - name: Upload rendered talk
         uses: actions/upload-artifact@v4
         with:
           name: slides-html
-          path: |
-            slides.html
-            slides_custom.css
-            slides_files/
+          path: slides.html
