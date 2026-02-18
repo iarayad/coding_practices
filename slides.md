@@ -19,22 +19,22 @@ format:
     incremental: true
 ---
 
-# The Problem
+# The problem
 
-Bad research code has a real cost:
+Bad research code has a cost:
 
 - We cannot read our own work two months later.
 - Others cannot verify or extend results.
 - Small changes take too long.
 - Bugs hide in duplicated, tangled logic.
 
-**Outcome:** we waste research time instead of doing research.
+**Outcome:** we waste research time.
 
-# The Fix: Be Systematic
+# The fix: be systematic
 
 1. Separate exploration from reusable code.
 2. Keep modules focused and small.
-3. Follow style conventions (PEP 8).
+3. Follow style conventions like PEP 8.
 4. Automate checks before every commit.
 5. Make environments reproducible.
 
@@ -44,7 +44,7 @@ Bad research code has a real cost:
 import this
 ```
 
-```text
+```{.text code-line-numbers="2|3|7|15"}
 Beautiful is better than ugly.
 Explicit is better than implicit.
 Simple is better than complex.
@@ -60,7 +60,7 @@ In the face of ambiguity, refuse the temptation to guess.
 There should be one-- and preferably only one --obvious way to do it.
 Although that way may not be obvious at first unless you're Dutch.
 Now is better than never.
-Although never is often better than *right* now.
+Although never is often better than right now.
 If the implementation is hard to explain, it's a bad idea.
 If the implementation is easy to explain, it may be a good idea.
 Namespaces are one honking great idea -- let's do more of those!
@@ -70,11 +70,11 @@ This is not philosophy only. It is a practical checklist for research code 💜
 
 # Examples
 
-## Bad Code: What It Looks Like
+## Bad code: what it looks like
 
 ::: {.columns}
 ::: {.column width="60%"}
-### Hidden State + Magic Numbers
+### Hidden state + magic numbers
 
 ```python
 WTF_W = 20
@@ -88,17 +88,17 @@ def run(alpha=0.4):
 ```
 :::
 ::: {.column width="40%"}
-### Why This Hurts
+### Why this Hurts
 
 - state changes silently
-- names hide intent
+- unclear names
 - same values repeated
-- hard to test deterministically
+- hard to test
 - unclear if alpha was provided
 :::
 :::
 
-## Better: Explicit and Testable
+## Better: explicit and testable
 
 ```python
 def compute_dispersion_vs_phase(width, phases, momenta, params):
@@ -112,13 +112,13 @@ def compute_dispersion_vs_phase(width, phases, momenta, params):
 
 Why better:
 
-- we can read and understand the physics intent
+- we can read and understand the physics
 - all inputs are explicit
 - no mutable globals
 - function is easy to unit test
 - behavior is reproducible
 
-## Bad Code: Mixed Responsibilities
+## Bad code: mixed responsibilities
 
 One function handling model, numerics, plotting, I/O.
 
@@ -136,7 +136,7 @@ Why this hurts:
 - producing and plotting data are separate tasks
 - we cannot reuse the model or solver without the plotting
 
-# Modular Code: Clear Responsibilities
+# Modular code: clear responsibilities
 
 Each module has a single responsibility.
 
@@ -155,23 +155,26 @@ Advantages:
 - Easier to test and debug
 - Easier to extend
 
-## Repository Shape
+## Repository shape
 
 Have a clear structure that reflects the modular design.
 
 ```text
 clean/
-  jj_supercurrent/
-    systems.py      # model construction
-    solver.py       # dispersion computation
-    current.py      # current extraction
-  tests/        # unit tests for each module
-  scripts/run_supercurrent.py  # orchestrate + plot
-  pyproject.toml    # environment and dependencies
-  README.md         # documentation and instructions
+  jj_supercurrent/  # reusable logic
+    systems.py
+    solver.py
+    current.py
+  tests/
+  scripts/  # functions that run experiments, not reusable logic
+    run_supercurrent.py
+    make_supercurrent_plot.py
+    run_supercurrent_scan.py
+  pyproject.toml
+  README.md
 ```
 
-## Clean Code Principles
+## Clean code principles
 
 - One file, one responsibility.
 - Names should describe physics intent (`phase`, `mu`, `delta`, `zeeman_x`).
@@ -179,24 +182,31 @@ clean/
 - Pass model parameters through `params`.
 - Prefer simple functions over clever abstractions.
 
-## Avoid Premature OOP
+## Avoid premature Object-Oriented Programming {.scrollable}
 
-In research code, classes are often overused too early.
+Is it really necessary to have a class here?
 
 ```python
 # Too much structure too soon
 class SuperMegaSolverManager:
     def __init__(self, cfg):
         self.cfg = cfg
-        self.cache = {}
+        self.system = self.build_system()
+
+    def build_system(self):
+        ...
 ```
 
-Prefer this until complexity really demands more:
+\ 
+
+Prefer this until complexity demands more:
 
 ```python
 def compute_dispersion_vs_phase(width, phases, momenta, params):
     ...
 ```
+
+\ 
 
 Rule of thumb:
 
@@ -220,12 +230,12 @@ def compute_dispersion_vs_phase(width, phases, momenta, params):
     return run_dispersion_scan(width, phases, momenta, params)
 ```
 
-## PEP 8 Reference (Live)
+## PEP 8 guide
 
 <iframe src="https://peps.python.org/pep-0008/" width="100%" height="560" loading="lazy"></iframe>
 
 
-# Tooling Stack
+# Tools that make all this easier
 
 ::: {.columns}
 ::: {.column width="50%"}
@@ -248,19 +258,16 @@ Reproducibility
 
 <iframe src="https://docs.astral.sh/ruff/" width="100%" height="560" loading="lazy"></iframe>
 
-Direct link: <https://docs.astral.sh/ruff/>
 
 ## pre-commit (Git Hook Automation)
 
 <iframe src="https://pre-commit.com/" width="100%" height="560" loading="lazy"></iframe>
 
-Direct link: <https://pre-commit.com/>
 
 ## Pixi (Environments + Tasks)
 
 <iframe src="https://pixi.sh/latest/" width="100%" height="560" loading="lazy"></iframe>
 
-Direct link: <https://pixi.sh/latest/>
 
 ## VS Code Setup
 
